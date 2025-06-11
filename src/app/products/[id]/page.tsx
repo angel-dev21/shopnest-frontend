@@ -1,15 +1,28 @@
 "use client";
+import { ChevronDown, Heart } from "lucide-react";
 //import { ExampleComponent } from "@/components/exampleComponent";
 // import { useCountry, useGetCountriesByCode } from "@/services/queries";
 import Image from "next/image";
 // import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 const CountryPage = () => {
   const { id } = useParams();
 
   const [quantity, setQuantity] = useState(1);
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+
+  const descriptionRef = useRef<HTMLDivElement>(null);
+
+  const toggleDescription = () => {
+    setIsDescriptionOpen(!isDescriptionOpen);
+    descriptionRef.current?.classList.toggle("hidden");
+  };
+
+
+
+  
 
   /*
   // Fetching del país principal
@@ -37,37 +50,33 @@ const CountryPage = () => {
 */
   return (
     <main>
-      <div className="flex justify-center items-center w-full ">
+      <div className="flex justify-center items-start w-full gap-[32px] ">
         <div className="flex-1">
-          {" "}
           {/* Imagen del producto */}
           <Image
-            src={`/images/${id}.png`}
+            src={`https://topitop.vtexassets.com/arquivos/ids/385499/3108694_1.jpg?v=638836308654700000`}
             alt={id as string}
             width={500}
             height={500}
+            className="w-full h-full object-contain"
           />
         </div>
-        <div className="flex-1">
-          {" "}
+        <div className="flex-1 px-[32px] pt-[40px] sticky top-0 h-[calc(100vh-5rem)] overflow-y-auto">
           {/* Información del producto */}
           <div className="flex justify-between">
             <p className="text-[13px]">Topitop hombre</p>
-            <span>
-              <Image src="/images/heart.png" alt="" width={20} height={20} />
-            </span>
+            <Heart className="w-6 h-6 cursor-pointer" />
           </div>
           <h1 className="text-[20px] font-bold">
             Polo Cuello Camisa Hombre Robert Verde Frost
           </h1>
           <p className="text-[13px]">Código: 3108692</p>
-          <div className="flex justify-between">
-            {" "}
+          <div className="flex items-center gap-2">
             {/* Precio */}
             <h2 className="text-[22px] font-bold">S/ 49.95</h2>
             <div className="flex gap-2">
               <p className="line-through">S/ 200.00</p>
-              <p className="text-[13px] text-red-500">-50%</p>
+              <p className="text-[13px] bg-black text-white text-center font-bold px-2 py-1 rounded-full">-50%</p>
             </div>
           </div>
           <div className="flex gap-2 items-center mt-4">
@@ -95,18 +104,14 @@ const CountryPage = () => {
             </div>
             <button className="w-full bg-red-500 hover:bg-red-800 text-white font-bold px-4 py-2 cursor-pointer uppercase">Agregar al carrito</button>
           </div>
-          <div>
-            {" "}
+          <div className="mt-4">
             {/* Descripción */}
-            <div className="flex justify-between">
-              <p>Descripción</p>
-              <span>
-                <Image src="" alt="" width={20} height={20} />
-              </span>
+            <div className="flex justify-between cursor-pointer group" id="description" onClick={() => toggleDescription()} ref={descriptionRef}>
+              <p className="text-[13px] font-bold text-red-600">Descripción</p>
+              <ChevronDown className={`w-6 h-6 transition-transform duration-300 ease-in-out transform ${isDescriptionOpen ? 'rotate-180' : 'rotate-0'}`} />
             </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consequatur, quidem.
+            <p className="hidden group-hover:block text-[12px]" id="descriptionContent" ref={descriptionRef}>
+            Topitop ha diseñado prendas para pasar esta temporada con moda y estilo de la marca Topitop Hombre. Renueva tu guardarropa con este Polo Cuello Camisa Hombre en el color de tu preferencia y combínalos para armar tu look perfecto.
             </p>
           </div>
         </div>
