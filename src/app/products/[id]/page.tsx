@@ -38,7 +38,9 @@ const CountryPage = () => {
   return (
     <main>
       <div className="flex justify-center items-center w-full ">
-        <div className="flex-1"> {/* Imagen del producto */}
+        <div className="flex-1">
+          {" "}
+          {/* Imagen del producto */}
           <Image
             src={`/images/${id}.png`}
             alt={id as string}
@@ -46,41 +48,56 @@ const CountryPage = () => {
             height={500}
           />
         </div>
-        <div className="flex-1"> {/* Información del producto */}
-          <div>
-            <p>Topitop hombre</p>
+        <div className="flex-1">
+          {" "}
+          {/* Información del producto */}
+          <div className="flex justify-between">
+            <p className="text-[13px]">Topitop hombre</p>
             <span>
               <Image src="/images/heart.png" alt="" width={20} height={20} />
             </span>
           </div>
-          <h1>Polo Cuello Camisa Hombre Robert Verde Frost</h1>
-          <p>Código: 3108692</p>
-          <div className="flex justify-between"> {/* Precio */}
-            <h2>200.000</h2>
-            <p>200.000</p>
-            <p>-50%</p>
-          </div>
-          <div> {/* Tallas */}
-            <p>Talla</p>
-            <div>
-              <button>XS</button>
-              <button>S</button>
-              <button>M</button>
-              <button>L</button>
-              <button>XL</button>
+          <h1 className="text-[20px] font-bold">
+            Polo Cuello Camisa Hombre Robert Verde Frost
+          </h1>
+          <p className="text-[13px]">Código: 3108692</p>
+          <div className="flex justify-between">
+            {" "}
+            {/* Precio */}
+            <h2 className="text-[22px] font-bold">S/ 49.95</h2>
+            <div className="flex gap-2">
+              <p className="line-through">S/ 200.00</p>
+              <p className="text-[13px] text-red-500">-50%</p>
             </div>
           </div>
-          <div className="flex justify-between"> {/* Botones de cantidad y agregar al carrito */}
-            <div>
-              <button onClick={() => setQuantity(quantity - 1)}>-</button>
-              <input type="number" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} />
-              <button onClick={() => setQuantity(quantity + 1)}>+</button>
-            </div>
-            <div>
-              <button>Agregar al carrito</button>
+          <div className="flex gap-2 items-center mt-4">
+            {/* Tallas */}
+            <p className="text-[11px]">Talla</p>
+            <div className="flex gap-2">
+              <button className="w-[32px] h-[32px] rounded-full bg-black text-white text-[13px] hover:bg-gray-800 px-2 cursor-pointer">XS</button>
+              <button className="w-[32px] h-[32px] rounded-full bg-black text-white text-[13px] hover:bg-gray-800 px-2 cursor-pointer">S</button>
+              <button className="w-[32px] h-[32px] rounded-full bg-black text-white text-[13px] hover:bg-gray-800 px-2 cursor-pointer">M</button>
+              <button className="w-[32px] h-[32px] rounded-full bg-black text-white text-[13px] hover:bg-gray-800 px-2 cursor-pointer">L</button>
+              <button className="w-[32px] h-[32px] rounded-full bg-black text-white text-[13px] hover:bg-gray-800 px-2 cursor-pointer">XL</button>
             </div>
           </div>
-          <div> {/* Descripción */}
+          <div className="flex justify-between items-center gap-2 mt-4">
+            {/* Botones de cantidad y agregar al carrito */}
+            <div className="flex w-[150px]">
+              <button onClick={() => setQuantity(quantity - 1)} className="cursor-pointer w-[40px] h-[40px] flex items-center justify-center border border-gray-300">-</button>
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(Number(e.target.value))}
+                className="w-[40px] text-center border border-gray-300 no-spinner"
+              />
+              <button onClick={() => setQuantity(quantity + 1)} className="cursor-pointer w-[40px] h-[40px] flex items-center justify-center border border-gray-300">+</button>
+            </div>
+            <button className="w-full bg-red-500 hover:bg-red-800 text-white font-bold px-4 py-2 cursor-pointer uppercase">Agregar al carrito</button>
+          </div>
+          <div>
+            {" "}
+            {/* Descripción */}
             <div className="flex justify-between">
               <p>Descripción</p>
               <span>
