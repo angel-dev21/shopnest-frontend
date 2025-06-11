@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { Poppins } from 'next/font/google';
 import Providers from "./Providers";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Shopnest",
@@ -30,6 +31,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>

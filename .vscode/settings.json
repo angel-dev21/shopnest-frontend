@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "product detail",
-        "project"
+        "project",
+        "footer"
     ]
 }
