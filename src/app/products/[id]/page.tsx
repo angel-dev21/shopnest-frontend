@@ -1,11 +1,10 @@
 "use client";
 import { ChevronDown, Heart } from "lucide-react";
-//import { ExampleComponent } from "@/components/exampleComponent";
-import { useGetProductByCode } from "@/services/queries";
+import { useGetAvailableSizesByCode, useGetProductByCode } from "@/services/queries";
 import Image from "next/image";
-// import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useRef, useState } from "react";
+import { AvailableSize } from "@/types/availableSize";
 
 const CountryPage = () => {
   const { id } = useParams();
@@ -28,24 +27,20 @@ const CountryPage = () => {
   
   // Fetching del país principal
   const { data, isLoading, error } = useGetProductByCode(id as string);
- 
+  const { data: availableSizes, isLoading: availableSizesLoading, error: availableSizesError } = useGetAvailableSizesByCode(id as string);
+  
   // const country =
   //   data && Array.isArray(data) && data.length > 0 ? data[0] : null;
 
   const product = data ?? null;
 
+  if (isLoading || availableSizesLoading) return <div>Loading...</div>;
 
-  if (isLoading) return <div>Loading...</div>;
-
-  if (error) return <div>Error: {error.message}</div>;
+  if (error || availableSizesError) return <div>Error: {(error || availableSizesError)?.message}</div>;
 
   if (!product) return <div>Product not found</div>;
- /*
-  // Fetching de los países vecinos
-  const { data: borderData, isLoading: bordersLoading } = useGetCountriesByCode(
-    country?.borders || []
-  );
 
+ /*
   // Estados de carga y errores
   //if (isLoading) return <SkeletonDetails />;
 
@@ -58,6 +53,8 @@ const CountryPage = () => {
 
   const borders = borderData ?? [];
 */
+  const mySizes = ["XS", "S", "M", "L", "XL"];
+
   return (
     <main>
       <div className="flex justify-center items-start w-full gap-[32px] ">
@@ -93,11 +90,14 @@ const CountryPage = () => {
             {/* Tallas */}
             <p className="text-[11px]">Talla</p>
             <div className="flex gap-2">
-              <button className="w-[32px] h-[32px] rounded-full bg-black text-white text-[13px] hover:bg-gray-800 px-2 cursor-pointer">XS</button>
-              <button className="w-[32px] h-[32px] rounded-full bg-black text-white text-[13px] hover:bg-gray-800 px-2 cursor-pointer">S</button>
-              <button className="w-[32px] h-[32px] rounded-full bg-black text-white text-[13px] hover:bg-gray-800 px-2 cursor-pointer">M</button>
-              <button className="w-[32px] h-[32px] rounded-full bg-black text-white text-[13px] hover:bg-gray-800 px-2 cursor-pointer">L</button>
-              <button className="w-[32px] h-[32px] rounded-full bg-black text-white text-[13px] hover:bg-gray-800 px-2 cursor-pointer">XL</button>
+              {mySizes?.map((size: string) => (
+                <button key={size} className={`w-[40px] h-[40px] border rounded-full text-[11px] ${availableSizes?.some((availableSize: AvailableSize) => availableSize.sizeLabel === size) ? "text-black border-gray-700 hover:bg-black hover:text-white cursor-pointer" : "relative text-gray-400 border-gray-300 select-none cursor-not-allowed before:content-[''] before:absolute before:w-full before:h-[2px] before:bg-gray-400 before:rotate-45 before:top-1/2 before:left-0"}`}>
+                  {size}
+                </button>
+              ))}
+              {availableSizes?.length === 0 && <p>No hay tallas disponibles</p>}
+              {availableSizesLoading && <p>Cargando tallas...</p>}
+              {availableSizesError && <p>Error al cargar tallas</p>}
             </div>
           </div>
           <div className="flex justify-between items-center gap-2 mt-4">
