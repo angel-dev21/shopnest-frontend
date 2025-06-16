@@ -1,16 +1,16 @@
-import { Country } from "@/types/country";
+import { Product } from "@/types/product";
 import useSWR from "swr";
 
-export function useCountries() {
-  return useSWR<Country[]>("/all");
+export function useProducts() {
+  return useSWR<Product[]>("/all");
 }
 
-export function useCountry(name: string) {
-  return useSWR<Country>(() => (name ? `/name/${name}` : null));
+export function useGetProductByCode(code: string) {
+  return useSWR<Product>(() => (code ? `/products/code/${code}` : null));
 }
 
-export function useGetCountriesByCode(codes: string[]) {
-  return useSWR<Country[]>(() =>
-    codes.length > 0 ? `/alpha?codes=${codes.join(",")}` : null
-  );
-}
+// export function useGetCountriesByCode(codes: string[]) {
+//   return useSWR<Country[]>(() =>
+//     codes.length > 0 ? `/alpha?codes=${codes.join(",")}` : null
+//   );
+// }
