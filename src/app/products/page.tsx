@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ProductResponseDto } from "@/types/ProductResponseDto";
 import ProductCard from "@/components/ProductCardComponent/ProductCardComponent";
 import { useProducts } from "@/services/queries";
+import Link from "next/link";
 
 const ProductsPage = () => {
   const [pList, setPList] = useState<ProductResponseDto[]>([]);
@@ -28,10 +29,23 @@ const ProductsPage = () => {
     }
   }, [data]);
 
+  const slugify = (text: string) =>
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+
   const catalog = () =>
     pList.map((product, id) => (
       <div key={id}>
-        <ProductCard {...product} />
+        <Link
+          href={`/products/${slugify(product.category.name)}-${slugify(
+            product.productName
+          )}-${slugify(product.productCode)}`}
+        >
+          <ProductCard {...product} />
+        </Link>
       </div>
     ));
 

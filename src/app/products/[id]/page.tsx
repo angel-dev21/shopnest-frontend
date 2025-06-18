@@ -24,10 +24,11 @@ const CountryPage = () => {
 // const parts = productId.split('-');
 // const code = parts[parts.length - 1];
 
-  
+  const code = typeof id === 'string' ? id.split('-').at(-1) ?? '' : '';  
+
   // Fetching del país principal
-  const { data, isLoading, error } = useGetProductByCode(id as string);
-  const { data: availableSizes, isLoading: availableSizesLoading, error: availableSizesError } = useGetAvailableSizesByCode(id as string);
+  const { data, isLoading, error } = useGetProductByCode(code);
+  const { data: availableSizes, isLoading: availableSizesLoading, error: availableSizesError } = useGetAvailableSizesByCode(code);
   
   // const country =
   //   data && Array.isArray(data) && data.length > 0 ? data[0] : null;
