@@ -2,14 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { ProductResponseDto } from "@/types/ProductResponseDto";
-import axios from "axios";
 import ProductCard from "@/components/ProductCardComponent/ProductCardComponent";
+import { useProducts } from "@/services/queries";
+import Link from "next/link";
 
 const ProductsPage = () => {
   const [pList, setPList] = useState<ProductResponseDto[]>([]);
   const [productPage, setProductPage] = useState(0);
+  const { data, isLoading, error } = useProducts(productPage);
 
-  useEffect(() => {
+  /*useEffect(() => {
     axios
       .get("http://localhost:8080/api/products", {
         params: {
@@ -19,18 +21,40 @@ const ProductsPage = () => {
       })
       .then((response) => setPList((pList) => pList.concat(response.data)))
       .catch((error) => console.log(error));
-  }, [productPage]);
+  }, [productPage]);*/
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setPList((pList) => pList.concat(data));
+    }
+  }, [data]);
+
+  const slugify = (text: string) =>
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
 
   const catalog = () =>
     pList.map((product, id) => (
       <div key={id}>
-        <ProductCard {...product} />
+        <Link
+          href={`/products/${slugify(product.category.name)}-${slugify(
+            product.productName
+          )}-${slugify(product.productCode)}`}
+        >
+          <ProductCard {...product} />
+        </Link>
       </div>
     ));
 
   const moreProducts = () => {
     setProductPage(productPage + 1);
   };
+
+  if (isLoading) return <div>Cargando...</div>;
+  if (error) return <div>Error</div>;
 
   return (
     <div>
