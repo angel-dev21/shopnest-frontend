@@ -1,4 +1,4 @@
-import { AvailableSize } from "@/types/availableSize";
+import { AvailableSize } from "@/types/AvailableSize";
 import { Product } from "@/types/product";
 import useSWR from "swr";
 
