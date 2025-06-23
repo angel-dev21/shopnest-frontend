@@ -24,10 +24,17 @@ const ProductsPage = () => {
   }, [productPage]);*/
 
   useEffect(() => {
+    setPList([]);
+    setProductPage(0);
+  }, []);
+
+  useEffect(() => {
     if (data && data.length > 0) {
-      setPList((pList) => pList.concat(data));
+      setPList((prevList) => {
+        return productPage === 0 ? data : prevList.concat(data);
+      });
     }
-  }, [data]);
+  }, [data, productPage]);
 
   const slugify = (text: string) =>
     text
