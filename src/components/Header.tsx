@@ -1,22 +1,16 @@
-'use client';
+"use client";
+
 import Link from "next/link";
 import React from "react";
+import { User } from "lucide-react";
 
 const Header = () => {
+  const generateUrls = () => {
+    const urls = ["Mujer", "Hombre", "Niños", "Accesorios", "Promociones"];
+    return urls;
+  };
 
-    const generateUrls = () => {
-        const urls = [
-            "Mujer",
-            "Hombre",
-            "Niños",
-            "Accesorios",
-            "Promociones",
-        ];
-        return urls;
-    }
-
-    const urls = generateUrls();
-
+  const urls = generateUrls();
 
   return (
     <header className="flex justify-center items-center w-full bg-elements text-color-text shadow">
@@ -35,13 +29,15 @@ const Header = () => {
               {url}
             </Link>
           ))}
-
         </div>
         <button
           id="theme-toggle-btn"
           className=" flex justify-center items-center gap-3"
         >
           <span className="text-[.75rem] sm:text-base">Iniciar Sesion</span>
+        </button>
+        <button className="relative">
+          <User />
         </button>
       </div>
     </header>
